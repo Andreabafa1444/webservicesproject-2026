@@ -9,13 +9,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CloudinaryDotNet" Version="1.28.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.8" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.14.0" />
     <PackageReference Include="NSwag.AspNetCore" Version="14.6.3" />
     <PackageReference Include="NSwag.MSBuild" Version="14.6.3" />
-        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -35,9 +37,7 @@
     </ItemGroup>
   </Target>
   <Target Name="NSwagSpec" AfterTargets="Build">
- <Exec EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" 
-        WorkingDirectory="../../nswag/document-generator" 
-        Command="nswag run openapi.nswag /variables:Configuration=$(Configuration),Project=$(MSBuildProjectFullPath),MsBuildOutputPath=$(TargetDir)" />
-          </Target>
+    <Exec EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" WorkingDirectory="../../nswag/document-generator" Command="nswag run openapi.nswag /variables:Configuration=$(Configuration),Project=$(MSBuildProjectFullPath),MsBuildOutputPath=$(TargetDir)" />
+  </Target>
 
 </Project>
