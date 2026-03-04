@@ -5,17 +5,21 @@ import { Editablemember, Member } from '../../types/member';
 import { Observable, tap } from 'rxjs';
 import { AccountService } from './account-service';
 import { Photo } from '../../types/member';
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class MembersService {
   private http = inject(HttpClient);
   private baseUrl = environment.apiUrl;
-    editMode = signal(false);
-      member = signal<Member | null>(null);
+  editMode = signal(false);
+  member = signal<Member | null>(null);
+  
+  private accountService = inject(AccountService);
+  
 
- getMember(id: string): Observable<Member> {
-    return this.http.get<Member>(this.baseUrl + "members/" + id)
+  getMember(id: string): Observable<Member> {
     return this.http.get<Member>(this.baseUrl + "members/" + id).pipe(
       tap(member => this.member.set(member))
     )
@@ -26,9 +30,17 @@ export class MembersService {
   }
 
   getPhotos(id:string){
-  return this.http.get<Photo[]>(`${this.baseUrl}members/${id}/photos`);
+    return this.http.get<Photo[]>(`${this.baseUrl}members/${id}/photos`);
   }
-   updateMember(member: Editablemember){
+
+  updateMember(member: Editablemember){
     return this.http.put(this.baseUrl + "members", member);
   }
+
+  uploadPhoto(file: File){
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post<Photo>(this.baseUrl + "members/photo", formData);
+  }
+
 }
