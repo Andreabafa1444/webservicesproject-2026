@@ -1,9 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable, signal, Signal } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { Member, Photo } from '../../types/member';
+import { Editablemember, Member } from '../../types/member';
 import { Observable } from 'rxjs';
-
+import { AccountService } from './account-service';
+import { Photo } from '../../types/member';
 @Injectable({
   providedIn: 'root'
 })
@@ -20,7 +21,10 @@ export class MembersService {
     return this.http.get<Member[]>(this.baseUrl + "members");
   }
 
-  getPhotos(id: string) {
-    return this.http.get<Photo[]>(`${this.baseUrl}members/${id}/photos`);
+  getPhotos(id:string){
+  return this.http.get<Photo[]>(`${this.baseUrl}members/${id}/photos`);
+  }
+   updateMember(member: Editablemember){
+    return this.http.put(this.baseUrl + "members", member);
   }
 }

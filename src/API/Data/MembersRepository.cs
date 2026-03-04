@@ -9,8 +9,7 @@ public class MembersRepository(AppDbContext context) : IMembersRepository
         return await context.Members.FindAsync(id);
     }
 
-    public async Task<Member?> GetMemberForUpdate(string id)
-    {
+    public async Task<Member?> GetMemberForUpdateAsync(string id)    {
         return await context.Members
             .Include(m => m.User)
             .SingleOrDefaultAsync(m => m.Id == id);
